@@ -46,10 +46,10 @@ class AnswerResponse(BaseModel):
 #             model="text-embedding-3-small")
  
 llm = ChatOpenAI( openai_api_key=os.getenv("OPENAI_API_KEY"),
-            base_url="https://aipipe.org/openrouter/v1",
+            base_url=os.getenv("OPENAI_BASE_URL"),
             model="openai/gpt-3.5-turbo", temperature=0.7)
 multimodal_llm = ChatOpenAI( openai_api_key=os.getenv("OPENAI_API_KEY"),
-            base_url="https://aipipe.org/openrouter/v1",
+            base_url=os.getenv("OPENAI_BASE_URL"),
             model="openai/gpt-4-vision-preview", temperature=0, max_tokens=1024)
 # Create retriever with MMR search type
 retriever = vectordb.as_retriever(
@@ -76,7 +76,7 @@ def load_chroma():
     return Chroma(
         persist_directory="chroma_db",
         embedding_function=OpenAIEmbeddings(openai_api_key=os.getenv('OPENAI_API_KEY'),
-            base_url="https://aipipe.org/openai/v1",
+            base_url=os.getenv("EMBEDDINGS_BASE_URL"),
             model="text-embedding-3-small")
     )
 
