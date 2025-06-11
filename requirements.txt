@@ -13,5 +13,7 @@ Pillow
 langchain-chroma
 dotenv
 urllib3
+beautifulsoup4
+requests
 
 
