@@ -144,7 +144,7 @@ async def answer_question(
                 question = image_desc
 
         # Get the answer and source documents from RAG chain
-        result = qa_chain({"query": question})
+        result = qa_chain.invoke({"query": question})
 
         # Collect links from source docs without duplicates
         seen_urls = set()
@@ -155,7 +155,7 @@ async def answer_question(
                 seen_urls.add(url)
                 snippet = doc.page_content[:200].replace("\n", " ") + "..."
                 links.append(LinkResponse(url=url, text=snippet))
-                if len(links) >= 5:  # limit to top 2 links
+                if len(links) >= 2:  # limit to top 2 links
                     break
 
         return AnswerResponse(answer=result["result"], links=links)
