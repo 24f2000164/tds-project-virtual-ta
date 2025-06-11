@@ -86,7 +86,7 @@ tests:
         value: Mentions that Docker is acceptable
       - type: contains
         transform: JSON.stringify(output.links)
-        value: " https://tds.s-anand.net/#/docker"
+        value: "https://tds.s-anand.net/#/docker"
   - vars:
       question: When is the TDS Sep 2025 end-term exam?
     assert:
