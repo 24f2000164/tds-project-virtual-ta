@@ -8,7 +8,8 @@ from langchain_core.messages import HumanMessage
 from langchain.chains import RetrievalQA
 from langchain_openai import ChatOpenAI
 
-from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
+
 
 from langchain_openai import OpenAIEmbeddings
 import os
@@ -52,7 +53,7 @@ vectordb = Chroma(
  
 llm = ChatOpenAI( openai_api_key=os.getenv("OPENAI_API_KEY"),
             base_url=os.getenv("OPENAI_BASE_URL"),
-            model="openai/gpt-3.5-turbo", temperature=0.7)
+            model="openai/gpt-4o-mini", temperature=0.7)
 multimodal_llm = ChatOpenAI( openai_api_key=os.getenv("OPENAI_API_KEY"),
             base_url=os.getenv("OPENAI_BASE_URL"),
             model="openai/gpt-4-vision-preview", temperature=0, max_tokens=1024)
