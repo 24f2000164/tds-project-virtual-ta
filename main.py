@@ -42,8 +42,13 @@ class AnswerResponse(BaseModel):
 
 # Initialize components
 # embeddings = OpenAIEmbeddings(openai_api_key=os.getenv('OPENAI_API_KEY'),
-#             base_url="https://aipipe.org/openai/v1",
+#             base_url=os.getenv("EMBEDDINGS_BASE_URL"),
 #             model="text-embedding-3-small")
+vectordb = Chroma(
+        persist_directory="chroma_db",
+        embedding_function=OpenAIEmbeddings(openai_api_key=os.getenv('OPENAI_API_KEY'),
+            base_url=os.getenv("EMBEDDINGS_BASE_URL"),
+            model="text-embedding-3-small"))
  
 llm = ChatOpenAI( openai_api_key=os.getenv("OPENAI_API_KEY"),
             base_url=os.getenv("OPENAI_BASE_URL"),
@@ -63,25 +68,25 @@ qa_chain = RetrievalQA.from_chain_type(
     retriever=retriever ,
     return_source_documents=True
 )
-def load_chroma():
-    # Extract if doesn't exist
-    if not os.path.exists('chroma_db'):
-        with tarfile.open('data/chroma_db.tar.gz', 'r:gz') as tar:
-            tar.extractall()
+# def load_chroma():
+#     # Extract if doesn't exist
+#     if not os.path.exists('chroma_db'):
+#         with tarfile.open('data/chroma_db.tar.gz', 'r:gz') as tar:
+#             tar.extractall()
     
-    # Verify extraction
-    if not os.path.exists('chroma_db'):
-        raise RuntimeError("Failed to extract ChromaDB")
+#     # Verify extraction
+#     if not os.path.exists('chroma_db'):
+#         raise RuntimeError("Failed to extract ChromaDB")
     
-    return Chroma(
-        persist_directory="chroma_db",
-        embedding_function=OpenAIEmbeddings(openai_api_key=os.getenv('OPENAI_API_KEY'),
-            base_url=os.getenv("EMBEDDINGS_BASE_URL"),
-            model="text-embedding-3-small")
-    )
+#     return Chroma(
+#         persist_directory="chroma_db",
+#         embedding_function=OpenAIEmbeddings(openai_api_key=os.getenv('OPENAI_API_KEY'),
+#             base_url=os.getenv("EMBEDDINGS_BASE_URL"),
+#             model="text-embedding-3-small")
+    
 
 # Singleton instance
-vectordb = load_chroma()
+ 
 
 def process_image(image_base64: str) -> str:
     """Extract text description from image using multimodal LLM"""
