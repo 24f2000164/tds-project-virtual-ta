@@ -192,3 +192,15 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+# LangChain and Chroma (DBs and caches)
+chroma_db/
+cache/
+.langchain/
+*.bin
+*.tar.gz
+
+# Docker
+*.pid
+*.sock
+*.tar
+*.img
