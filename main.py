@@ -145,6 +145,8 @@ async def answer_question(
 
         # Get the answer and source documents from RAG chain
         result = qa_chain.invoke({"query": question})
+        final_answer = result.get("result") or ""
+
 
         # Collect links from source docs without duplicates
         seen_urls = set()
@@ -158,7 +160,7 @@ async def answer_question(
                 if len(links) >= 2:  # limit to top 2 links
                     break
 
-        return AnswerResponse(answer=result["result"], links=links)
+        return AnswerResponse(answer=final_answer, links=links)
 
     except Exception as e:
         traceback.print_exc()
