@@ -59,8 +59,8 @@ multimodal_llm = ChatOpenAI( openai_api_key=os.getenv("OPENAI_API_KEY"),
             model="openai/gpt-4-vision-preview", temperature=0, max_tokens=1024)
 # Create retriever with MMR search type
 retriever = vectordb.as_retriever(
-    search_type="mmr",  # Maximal Marginal Relevance
-    search_kwargs={"k": 5}
+    search_type="similarity",  # Maximal Marginal Relevance
+    search_kwargs={"k": 10}
 )
 qa_chain = RetrievalQA.from_chain_type(
     llm=llm,
