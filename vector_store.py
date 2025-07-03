@@ -13,6 +13,7 @@ class VectorStoreBuilder:
         self.embeddings = OpenAIEmbeddings(openai_api_key=os.getenv("OPENAI_API_KEY"),
                                         model="text-embedding-3-small",
                                         base_url=os.getenv("EMBEDDINGS_BASE_URL"))
+     
         self.persist_directory = "chroma_db"
     def clean_metadata(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Convert all metadata values to ChromaDB-compatible types"""
